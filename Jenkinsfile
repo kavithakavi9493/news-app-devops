@@ -1,10 +1,10 @@
 pipeline {
     agent any
-
+    
     stages {
 
         stage('Check & Install Java') {
-            steps {
+            steps {  
                 sh '''
                     echo "=== Checking Java ==="
                     if java -version >/dev/null 2>&1; then
@@ -47,7 +47,7 @@ pipeline {
                         cd /opt
                         sudo wget https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.30/bin/apache-tomcat-10.1.30.tar.gz
                         sudo tar -xzf apache-tomcat-10.1.30.tar.gz
-                        sudo mv apache-tomcat-10.1.30 tomcat10
+                        sudo mv apache-tomcat-10.1.30 /opt/tomcat10
                         sudo chmod +x /opt/tomcat10/bin/*.sh
                     fi
                 '''
@@ -81,7 +81,29 @@ pipeline {
                 '''
             }
         }
-    }
+
+        stage('Push Artifacts to JFrog Artifactory') {
+            steps {
+                script {
+                    def currentDate = new java.text.SimpleDateFormat("yyyy-MM-dd_HH-mm").format(new Date())
+                    def targetPath = "news-app/${currentDate}/"
+
+                    rtUpload(
+                        serverId: "jfrog",
+                        spec: """{
+                            "files": [
+                                {
+                                    "pattern": "target/news-app.war",
+                                    "target": "${targetPath}"
+                                }
+                            ]
+                        }"""
+                    )
+                }
+            }
+        }
+
+    } // end stages
 
     post {
         success {
