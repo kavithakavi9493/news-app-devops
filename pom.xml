@@ -1,3 +1,4 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -76,5 +77,15 @@
 
         </plugins>
     </build>
+<distributionManagement>
+    <snapshotRepository>
+        <id>jfrog-snapshots</id>
+        <url>https://trially2to2.jfrog.io/artifactory/news-app/</url>
+    </snapshotRepository>
 
+    <repository>
+        <id>jfrog-releases</id>
+        <url>https://trially2to2.jfrog.io/artifactory/news-app-release/</url>
+    </repository>
+</distributionManagement>
 </project>
