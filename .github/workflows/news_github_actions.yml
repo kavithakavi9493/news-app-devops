@@ -50,7 +50,7 @@ jobs:
             cd /opt
             sudo wget https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.49/bin/apache-tomcat-10.1.49.tar.gz
             sudo tar -xzf apache-tomcat-10.1.49.tar.gz
-            sudo mv apache-tomcat-10.1.49 /opt/tomcat10
+            sudo mv /opt/apache-tomcat-10.1.49 /opt/tomcat10
             sudo chmod +x /opt/tomcat10/bin/*.sh
         fi
 
